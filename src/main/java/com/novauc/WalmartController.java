@@ -29,7 +29,7 @@ public class WalmartController {
         List<Purchase> purchaseList;
         if (customerName != null){
             //purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
-            purchaseList = (List<Purchase>) purchases.findByNameLikeIgnoreCase(customerName);
+            purchaseList = (List<Purchase>) purchases.findByName(customerName);
         } else if (category != null){
             purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
         } else {
