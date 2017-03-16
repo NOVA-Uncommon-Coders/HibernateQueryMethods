@@ -28,7 +28,8 @@ public class WalmartController {
     public String index(Model model, String category, String customerName) {
         List<Purchase> purchaseList;
         if (customerName != null){
-            purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
+            //purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
+            purchaseList = (List<Purchase>) purchases.findByNameLikeIgnoreCase(customerName);
         } else if (category != null){
             purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
         } else {
