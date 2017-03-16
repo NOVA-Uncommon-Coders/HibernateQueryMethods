@@ -12,9 +12,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by willc on 3/16/17.
- */
+
 @Controller
 public class WalmartController {
     @Autowired
@@ -27,10 +25,10 @@ public class WalmartController {
      ***********************/
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpSession session, String category, String customerName) {
+    public String index(Model model, String category, String customerName) {
         List<Purchase> purchaseList;
         if (customerName != null){
-            purchaseList = (List<Purchase>) purchases.findAllByCustomerName(customerName);
+            purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
         } else if (category != null){
             purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
         } else {
@@ -42,7 +40,7 @@ public class WalmartController {
     }
 
     /***********************
-     * POST routes
+     * PostConstruct
      ***********************/
 
 
