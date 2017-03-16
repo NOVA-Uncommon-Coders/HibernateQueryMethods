@@ -27,10 +27,11 @@ public class WalmartController {
      ***********************/
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpSession session, String category) {
+    public String index(Model model, HttpSession session, String category, String customerName) {
         List<Purchase> purchaseList;
-
-        if (category != null){
+        if (customerName != null){
+            purchaseList = (List<Purchase>) purchases.findAllByCustomerName(customerName);
+        } else if (category != null){
             purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
         } else {
             purchaseList= (List<Purchase>) purchases.findAll();

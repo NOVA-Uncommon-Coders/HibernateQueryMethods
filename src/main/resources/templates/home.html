@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <div>
+        <div class="nav">
             <nav>
                 <a href="/">All</a>
                 <a href="/?category=Furniture">Furniture</a>
@@ -16,6 +16,10 @@
                 <a href="/?category=Shoes">Shoes</a>
                 <a href="/?category=Food">Food</a>
                 <a href="/?category=Jewelry">Jewelry</a>
+                <form action="/" method="get">
+                    <input type="text" placeholder="Customer name:" value="customerName">
+                    <button type="submit" class="btn btn-success">Search</button>
+                </form>
             </nav>
         </div>
     </header>

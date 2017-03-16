@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PurchaseRepository extends CrudRepository<Purchase, Integer> {
     List<Purchase> findAllByCategory(String category);
+    List<Purchase> findAllByCustomerName(String customerName);
 }
