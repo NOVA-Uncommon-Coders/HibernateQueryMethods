@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
+<html>
 <body>
-$END$
+<a href="/">All</a>
+<a href="/?category=Furniture">Furniture</a>
+<a href="/?category=Alcohol">Alcohol</a>
+<a href="/?category=Toiletries">Toiletries</a>
+<a href="/?category=Shoes">Shoes</a>
+<a href="/?category=Food">Food</a>
+<a href="/?category=Jewelry">Jewelry</a>
+<form action="/" method="get">
+    <input type="text" placeholder="Enter name" name="name">
+    <button type="submit">Submit</button>
+</form>
+
+<form action="/" method="get">
+    <input type="text" placeholder="Search" name="search"/>
+    <button type="submit">Search</button>
+</form>
+<ol>
+    {{#purchases}}
+    <li>{{date}} {{creditCard}} {{cvv}} {{category}}</li>
+    {{/purchases}}
+
+</ol>
+<br>
+
+<ol>
+    {{#customers}}
+    <li> {{name}} {{emailAddress}}</li>
+    {{/customers}}
+</ol>
 </body>
 </html>
