@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<a href="/">All</a>
+<a href="/?category=date">date</a>
+<a href="/?category=creditCard">creditCard</a>
+<a href="/?category=cvv">cvv</a>
+<a href="/?category=customerid">customer</a>
+<br><br>
+
+
+<form action="/" method="get">
+    <!--<input type="text" placeholder="Search" name="database"/>-->
+    <!--<button type="submit">Search</button>-->
+</form>
+
+<ol>
+    {{#purchases}}
+    <li>{{category}} {{date}} {{creditCard}} {{cvv}} </li>
+    {{/purchases}}
+</ol>
+
+</body>
+</html>
