@@ -30,8 +30,10 @@ public class WalmartController {
         if (customerName != null){
             //purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
             purchaseList = (List<Purchase>) purchases.findByName(customerName);
+            model.addAttribute("searchFilter", customerName);
         } else if (category != null){
             purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
+            model.addAttribute("currentFilter", category);
         } else {
             purchaseList= (List<Purchase>) purchases.findAll();
         }
