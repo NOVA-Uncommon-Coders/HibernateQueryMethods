@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
@@ -28,11 +27,10 @@ public class WalmartController {
     public String index(Model model, String category, String customerName) {
         List<Purchase> purchaseList;
         if (customerName != null){
-            //purchaseList = (List<Purchase>) purchases.findAllByCustomer(customers.findFirstByName(customerName));
-            purchaseList = (List<Purchase>) purchases.findByName(customerName);
+            purchaseList =  purchases.findByName(customerName);
             model.addAttribute("searchFilter", customerName);
         } else if (category != null){
-            purchaseList = (List<Purchase>) purchases.findAllByCategory(category);
+            purchaseList = purchases.findAllByCategory(category);
             model.addAttribute("currentFilter", category);
         } else {
             purchaseList= (List<Purchase>) purchases.findAll();
@@ -50,25 +48,19 @@ public class WalmartController {
     @PostConstruct
     public void init() {
         try {
-        File file;
         Scanner scanner;
-        if (customers.count() == 0) {
-            file = new File("customers.csv");
-            scanner = new Scanner(file);
-            scanner.useDelimiter("\n");
+        if (customers.count() == 0 && purchases.count() == 0) {
+            scanner = new Scanner(new File("customers.csv"));
             while(scanner.hasNext()){
-                String[] data = scanner.next().split(",");
+                String[] data = scanner.nextLine().split(",");
                 customers.save(new Customer(data[0], data[1]));
             }
-        }        if (purchases.count() == 0) {
-                file = new File("purchases.csv");
-                scanner = new Scanner(file);
-                scanner.useDelimiter("\n");
-                while(scanner.hasNext()){
-                    String[] data = scanner.next().split(",");
-                    purchases.save(new Purchase(checkCustomer(data[0]), data[1], data[2], data[3], data[4]));
-                }
+            scanner = new Scanner(new File("purchases.csv"));
+            while(scanner.hasNext()){
+                String[] data = scanner.nextLine().split(",");
+                purchases.save(new Purchase(checkCustomer(data[0]), data[1], data[2], data[3], data[4]));
             }
+        }
     } catch (Exception e){
             System.out.println("Huston had a problem with scanning @" +  e.getMessage());
         }
@@ -77,7 +69,8 @@ public class WalmartController {
         Customer customer = customers.findFirstById(Integer.valueOf(id));
         if (customer == null){
             System.out.println("customer was null");
-            //TODO TEST STATEMENT
+            //TODO TEST STATEMENT.
+            //Used to catch mismatched ID fields or invalid entries
         }
         return customer;
     }
