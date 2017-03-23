@@ -11,6 +11,7 @@
         <div class="nav" style="text-align:center;">
             <nav>
                 <a href="/">All</a>
+                <a href="/?date=date">Date</a>
                 <a href="/?category=Furniture">Furniture</a>
                 <a href="/?category=Alcohol">Alcohol</a>
                 <a href="/?category=Toiletries">Toiletries</a>
@@ -55,7 +56,7 @@
 
 
     {{#showNext}}
-    <a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+    <a href="/?page={{nextPage}}{{#date}}&date={{.}}{{/date}}{{#category}}&category={{.}}{{/category}}">Next</a>
     {{/showNext}}
 <br><br>
 

@@ -1,5 +1,6 @@
 package com.novauc;
 
+
 import javax.persistence.*;
 
 @Entity

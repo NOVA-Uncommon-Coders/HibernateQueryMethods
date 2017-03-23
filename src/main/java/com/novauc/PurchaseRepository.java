@@ -7,4 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PurchaseRepository extends PagingAndSortingRepository<Purchase, Integer> {
     Page<Purchase> findByCategory(Pageable pageable, String category);
+    Page<Purchase> findAllByOrderByDateAsc(Pageable pageable);
+
+//    findAllByOrderByDateTimeAsc
 }
