@@ -1,10 +1,13 @@
 package com.novauc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -22,21 +25,21 @@ public class WalmartController {
     /***********************
      * GET routes
      ***********************/
-
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String index(Model model, String category, String customerName) {
-        List<Purchase> purchaseList;
-        if (customerName != null){
-            purchaseList =  purchases.findByName(customerName);
-            model.addAttribute("searchFilter", customerName);
-        } else if (category != null){
-            purchaseList = purchases.findAllByCategory(category);
-            model.addAttribute("currentFilter", category);
-        } else {
-            purchaseList= (List<Purchase>) purchases.findAll();
+    public String home(Model model, String category, Integer page) {
+        page = (page == null) ? 0 : page;
+        PageRequest pr = new PageRequest(page, 10);
+        Page<Purchase> p;
+        if (category != null) {
+            p = purchases.findByCategory(pr, category);
         }
-
-        model.addAttribute("purchases", purchaseList);
+        else {
+            p = purchases.findAll(pr);
+        }
+        model.addAttribute("purchases", p);
+        model.addAttribute("nextPage", page+1);
+        model.addAttribute("showNext", p.hasNext());
+        model.addAttribute("category", category);
         return "home";
     }
 
