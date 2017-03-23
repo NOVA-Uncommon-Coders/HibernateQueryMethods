@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>wallE-World</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>a{ margin: 0 12px; padding: 0 12px; font-weight: 800;}</style>
+</head>
+<body>
+    <header>
+        <div class="nav" style="text-align:center;">
+            <nav>
+                <a href="/">All</a>
+                <a href="/?category=Furniture">Furniture</a>
+                <a href="/?category=Alcohol">Alcohol</a>
+                <a href="/?category=Toiletries">Toiletries</a>
+                <a href="/?category=Shoes">Shoes</a>
+                <a href="/?category=Food">Food</a>
+                <a href="/?category=Jewelry">Jewelry</a>
+            </nav>
+        </div>
+    </header>
+<div>
+    <h5 style="float:left;">{{#currentFilter}} Filter by: <strong>{{currentFilter}}</strong> {{/currentFilter}}{{#searchFilter}} Search parameter: <strong>{{searchFilter}}</strong> {{/searchFilter}}</h5>
+    <form action="/" method="get" style="display:inline; float:right;">
+        <input type="text" placeholder="Customer name:" name="customerName">
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
+</div>
+<table class="table table-hover table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Category</th>
+        <th>Credit Card</th>
+        <th>CVV</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#purchases}}
+        <tr>{{#customer}}
+            <td>{{name}}</td>
+            <td>{{email}}</td>
+            {{/customer}}
+            <td>{{category}}</td>
+            <td>{{creditCard}}</td>
+            <td>{{cvv}}</td>
+            <td>{{date}}</td>
+        </tr>
+    {{/purchases}}
+    </tbody>
+</table>
+
+
+    {{#showNext}}
+    <a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+    {{/showNext}}
+<br><br>
+
+
+
+</body>
+</html>
