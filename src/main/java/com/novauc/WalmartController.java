@@ -29,24 +29,21 @@ public class WalmartController {
      * GET routes
      ***********************/
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, String category, Integer page, String date) {
+    public String home(Model model, String category, Integer page) {
         page = (page == null) ? 0 : page;
         PageRequest pr = new PageRequest(page, 5);
         Page<Purchase> p;
         if (category != null) {
-            p = purchases.findByCategory(pr, category);
+            p = purchases.findByCategoryOrderByDateDesc(pr, category);
         }
-        else if (date != null){
-            p = purchases.findAllByOrderByDateAsc(pr);
-        }
+
         else {
-            p = purchases.findAll(pr);
+            p = purchases.findAllByOrderByDateDesc(pr);
         }
         model.addAttribute("purchases", p);
         model.addAttribute("nextPage", page+1);
         model.addAttribute("showNext", p.hasNext());
         model.addAttribute("category", category);
-        model.addAttribute("date", date);
         return "home";
     }
 
