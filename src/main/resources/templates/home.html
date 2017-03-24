@@ -1,0 +1,54 @@
+<html>
+<body>
+
+<a href="/">All</a>
+<a href="/?category=furniture">Furniture</a>
+<a href="/?category=alcohol">Alcohol</a>
+<a href="/?category=toiletries">Toiletries</a>
+<a href="/?category=shoes">Shoes</a>
+<a href="/?category=food">Food</a>
+<a href="/?category=jewelry">Jewelry</a>
+<br><br>
+
+<!--<ol>-->
+    <!--{{#purchases}}-->
+    <!--<li>{{category}} {{credit_card}} {{cvv}}{{date}}</li>-->
+    <!--{{/purchases}}-->
+<!--</ol>-->
+
+<!--<ol>-->
+    <!--{{#customers}}-->
+    <!--<li>{{name}}{{email}}</li>-->
+    <!--{{/customers}}-->
+<!--</ol>-->
+
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Category</th>
+        <th>Credit Card #</th>
+        <th>CVV</th>
+        <th>Date</th>
+    </tr>
+    {{#purchases}}
+
+    <tr>
+        <!-- find a way to join purchase with custoer data and add to model for following to render -->
+                <td>{{customer.name}}</td>
+                <td>{{customer.email}}</td>
+
+        <td>{{category}}</td>
+        <td>{{credit_card}}</td>
+        <td>{{cvv}}</td>
+        <td>{{date}}</td>
+    </tr>
+    {{/purchases}}
+
+
+</table>
+<br><br>
+
+</body>
+</html>
