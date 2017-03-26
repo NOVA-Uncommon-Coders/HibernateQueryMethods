@@ -49,7 +49,7 @@ public class HibernateController {
     public String home(Model model, String sorter,Integer page) {
         page = (page == null) ? 0 : page;
         //THIS IS THE LINE I WILL USE FOR NOW
-        PageRequest pr = new PageRequest(page, 10);
+        PageRequest pr = new PageRequest(page, 5);
         Page<Purchase> p = purchases.findAll(pr);
 
         if(sorter!=null){
@@ -58,11 +58,11 @@ public class HibernateController {
                 model.addAttribute("purchases", p);
             } else if (!sorter.equalsIgnoreCase("all")) {
                 if (sorter.equalsIgnoreCase("asc")){
-                    pr = new PageRequest(page,10, Sort.Direction.ASC,"date");
+                    pr = new PageRequest(page,5, Sort.Direction.ASC,"date");
                     p = purchases.findAll(pr);
                 }
                 else if (sorter.equalsIgnoreCase("desc")){
-                    pr = new PageRequest(page,10, Sort.Direction.DESC,"date");
+                    pr = new PageRequest(page,5, Sort.Direction.DESC,"date");
 
                     p = purchases.findAll(pr);
                 }
