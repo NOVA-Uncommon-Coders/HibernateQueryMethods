@@ -11,6 +11,10 @@
 <a href="/?sorter=Shoes">Shoes</a>
 <a href="/?sorter=Food">Food</a>
 <a href="/?sorter=Jewelry">Jewelry</a>
+Date
+<a href="/?sorter=asc">Ascending</a>
+<a href="/?sorter=desc">Descending</a>
+
 
 <br><br>
 <table>
@@ -34,5 +38,15 @@
     {{/purchases}}
 
 </table>
+<br/>
+<br/>
+{{#showPrevious}}
+<a href="/?page={{previousPage}}{{#sorter}}&sorter={{.}}{{/sorter}}">Previous Page</a>
+{{/showPrevious}}
+{{pageNumber}}
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#sorter}}&sorter={{.}}{{/sorter}}">Next Page</a>
+{{/showNext}}
+
 </body>
 </html>
