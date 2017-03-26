@@ -1,0 +1,40 @@
+<html>
+<body>
+
+
+<a href="/">All</a>
+<a href="/?category=Furniture">Furniture</a>
+<a href="/?category=Alcohol">Alcohol</a>
+<a href="/?category=Toiletries">Toiletries</a>
+<a href="/?category=Shoes">Shoes</a>
+<a href="/?category=Food">Food</a>
+<a href="/?category=Jewelry">Jewelry</a>
+<form action="/" method="get">
+    <input type="text" placeholder="Enter name" name="name">
+    <button type="submit">Submit</button>
+</form>
+
+<form action="/" method="get">
+    <input type="text" placeholder="Search" name="search"/>
+    <button type="submit">Search</button>
+</form>
+<ol>
+    {{#purchases}}
+    {{#customer}}
+    {{name}} {{emailAddress}}
+    {{/customer}}
+    <li>{{date}} {{creditCard}} {{cvv}} {{category}}</li>
+
+
+    <li> {{name}} {{emailAddress}}</li>
+    {{/purchases}}
+</ol>
+<br>
+
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+{{/showNext}}
+
+
+</body>
+</html>
