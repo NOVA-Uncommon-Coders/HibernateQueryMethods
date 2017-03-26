@@ -1,0 +1,52 @@
+<html>
+<head>
+
+</head>
+<body>
+
+<a href="/">All</a>
+<a href="/?sorter=Furniture">Furniture</a>
+<a href="/?sorter=Alcohol">Alcohol</a>
+<a href="/?sorter=Toiletries">Toiletries</a>
+<a href="/?sorter=Shoes">Shoes</a>
+<a href="/?sorter=Food">Food</a>
+<a href="/?sorter=Jewelry">Jewelry</a>
+Date
+<a href="/?sorter=asc">Ascending</a>
+<a href="/?sorter=desc">Descending</a>
+
+
+<br><br>
+<table>
+    <thead>
+    <th>name</th>
+    <th>email</th>
+    <th>category</th>
+    <th>credit_card</th>
+    <th>cvv</th>
+    <th>date</th>
+    </thead>
+    {{#purchases}}
+    <tbody>
+    <td>{{customer.name}}</td>
+    <td>{{customer.email}}</td>
+    <td>{{category}}</td>
+    <td>{{credit_card}}</td>
+    <td>{{cvv}}</td>
+    <td>{{date}}</td>
+    </tbody>
+    {{/purchases}}
+
+</table>
+<br/>
+<br/>
+{{#showPrevious}}
+<a href="/?page={{previousPage}}{{#sorter}}&sorter={{.}}{{/sorter}}">Previous Page</a>
+{{/showPrevious}}
+{{pageNumber}}
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#sorter}}&sorter={{.}}{{/sorter}}">Next Page</a>
+{{/showNext}}
+
+</body>
+</html>
