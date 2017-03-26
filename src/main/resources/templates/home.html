@@ -1,5 +1,7 @@
 <html>
 <body>
+
+
 <a href="/">All</a>
 <a href="/?category=Furniture">Furniture</a>
 <a href="/?category=Alcohol">Alcohol</a>
@@ -18,16 +20,21 @@
 </form>
 <ol>
     {{#purchases}}
+    {{#customer}}
+    {{name}} {{emailAddress}}
+    {{/customer}}
     <li>{{date}} {{creditCard}} {{cvv}} {{category}}</li>
-    {{/purchases}}
 
+
+    <li> {{name}} {{emailAddress}}</li>
+    {{/purchases}}
 </ol>
 <br>
 
-<ol>
-    {{#customers}}
-    <li> {{name}} {{emailAddress}}</li>
-    {{/customers}}
-</ol>
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+{{/showNext}}
+
+
 </body>
 </html>

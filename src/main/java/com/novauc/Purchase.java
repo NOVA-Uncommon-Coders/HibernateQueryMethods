@@ -29,9 +29,12 @@ public class Purchase {
     @Column(nullable = false)
     String category;
 
-    public Purchase(String date, String column, String cvv, String category, String s){
+
+    public Purchase(){
 
     }
+
+
 
 
 
@@ -62,12 +65,13 @@ public class Purchase {
         this.customer = customer;
     }
 
-    public Purchase(String date, String creditCard, String cvv, String category, Customer customer) {
-        this.date = date;
+    public Purchase(Customer customer,String date, String creditCard, String cvv, String category ) {
+       this.customer = customer;
+       this.date = date;
         this.creditCard = creditCard;
         this.cvv = cvv;
         this.category = category;
-        this.customer = customer;
+
 
     }
 

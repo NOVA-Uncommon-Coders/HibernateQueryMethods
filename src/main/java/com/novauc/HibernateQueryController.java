@@ -1,6 +1,8 @@
 package com.novauc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,59 +27,61 @@ public class HibernateQueryController {
     PurchaseRepository purchases;
 
 
+
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String index(Model model, String category, String name,String search) {
-        List<Purchase> purchaseList;
-        if (name != null){
-            purchaseList =  purchases.findByName(name);
-        } else if (category != null) {
-            purchaseList = purchases.findAllByCategory(category);
+    public String home(Model model, String category, Integer page) {
+        page = (page == null) ? 0 : page;
+        PageRequest pr = new PageRequest(page, 10);
+        Page<Purchase> p;
+        if (category != null) {
+            p = purchases.findByCategory(pr, category);
         }
-        else if (search != null) {
-                purchaseList = purchases.findByName(search);
-
-        } else {
-            purchaseList= (ArrayList) purchases.findAll();
+        else {
+            p = purchases.findAll(pr);
         }
-
-        model.addAttribute("purchases", purchaseList);
+        model.addAttribute("purchases", p);
+        model.addAttribute("nextPage", page+1);
+        model.addAttribute("showNext", p.hasNext());
+        model.addAttribute("category", category);
         return "home";
     }
-
-
     @PostConstruct
-    public void init() {
+    public void init() throws FileNotFoundException {
         try {
             File file;
             Scanner scanner;
-            if (customers.count() == 0) {
+            if (customers.count() == 0 || purchases.count() == 0) {
                 file = new File("customers.csv");
                 scanner = new Scanner(file);
-                scanner.useDelimiter("\n");
                 while (scanner.hasNext()) {
                     String line = scanner.nextLine();
                     String[] columns = line.split(",");
-                    Customer customer = new Customer(String.valueOf(columns[0]), columns[1]);
-                    customers.save(customer);
+                    customers.save(new Customer(columns[0], columns[1]));
+
                 }
             }
             if (purchases.count() == 0) {
                 file = new File("purchases.csv");
                 scanner = new Scanner(file);
-                scanner.useDelimiter("\n");
                 while (scanner.hasNext()) {
                     String line = scanner.nextLine();
                     String[] columns = line.split(",");
-                    Purchase purchase = new Purchase(String.valueOf(columns[0]), columns[1], columns[2], columns[3],columns[4]);
-                    purchases.save(purchase);
+
+                    purchases.save(new Purchase(addCustomer(columns[0]), columns[1], columns[2], columns[3], columns[4]));
                 }
             }
         } catch (Exception e) {
             System.out.println();
 
-
         }
-            return;
+    }
+
+    public Customer addCustomer(String id){
+        Customer customer = customers.findFirstById(Integer.valueOf(id));
+
+
+        return customer;
 
 
     }
