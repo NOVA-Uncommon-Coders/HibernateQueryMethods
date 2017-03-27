@@ -12,7 +12,7 @@ import java.util.List;
  * Created by jerieshasmith on 3/16/17.
  */
 public interface PurchaseRepository extends PagingAndSortingRepository<Purchase, Integer> {
-    Page<Purchase> findByCategory(Pageable pageable, String category);
+    Page<Purchase> findByCategoryOrderByDateDesc(Pageable pageable, String category);
 
 
 

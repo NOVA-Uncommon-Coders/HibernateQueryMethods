@@ -30,12 +30,12 @@ public class HibernateQueryController {
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, String category, Integer page) {
+    public String home(Model model, String category, Integer page, String date) {
         page = (page == null) ? 0 : page;
-        PageRequest pr = new PageRequest(page, 10);
+        PageRequest pr = new PageRequest(page, 5);
         Page<Purchase> p;
         if (category != null) {
-            p = purchases.findByCategory(pr, category);
+            p = purchases.findByCategoryOrderByDateDesc(pr, category);
         }
         else {
             p = purchases.findAll(pr);
@@ -48,10 +48,9 @@ public class HibernateQueryController {
     }
     @PostConstruct
     public void init() throws FileNotFoundException {
-        try {
             File file;
             Scanner scanner;
-            if (customers.count() == 0 || purchases.count() == 0) {
+            if (customers.count() == 0) {
                 file = new File("customers.csv");
                 scanner = new Scanner(file);
                 while (scanner.hasNext()) {
@@ -71,10 +70,6 @@ public class HibernateQueryController {
                     purchases.save(new Purchase(addCustomer(columns[0]), columns[1], columns[2], columns[3], columns[4]));
                 }
             }
-        } catch (Exception e) {
-            System.out.println();
-
-        }
     }
 
     public Customer addCustomer(String id){
