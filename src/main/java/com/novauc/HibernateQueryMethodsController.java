@@ -1,6 +1,8 @@
 package com.novauc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,23 +28,40 @@ public class HibernateQueryMethodsController {
 
     @Autowired
     PurchaseRepository purchases;
+
     @Autowired
     CustomerRepository customers;
 
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, String category) {
-        List<Purchase> purchaseList = (ArrayList) purchases.findAll();
-        if (category != null){
-            purchaseList = (List)purchases.findPurchaseByCategory(category);
+    public String home(Model model, String category, Integer page) {
+        page = (page == null) ? 0 : page;
+        PageRequest pr = new PageRequest(page, 5);
+        Page<Purchase> p;
+        if (category != null) {
+            p = purchases.findByCategoryOrderByDateDesc(pr, category);
         }
         else {
-            purchaseList = (List)purchases.findAll();
+            p = purchases.findAllByOrderByDateDesc(pr);
         }
-        model.addAttribute("purchases", purchaseList);
+        model.addAttribute("purchases", p);
+        model.addAttribute("nextPage", page+1);
+        model.addAttribute("showNext", p.hasNext());
+        model.addAttribute("category", category);
         return "home";
     }
+
+//        List<Purchase> purchaseList = (ArrayList) purchases.findAll();
+//        if (category != null){
+//            purchaseList = (List)purchases.findPurchaseByCategory(category);
+//        }
+//        else {
+//            purchaseList = (List)purchases.findAll();
+//        }
+//        model.addAttribute("purchases", purchaseList);
+//        return "home";
+//    }
 
     @PostConstruct
     public void init() throws IOException {
