@@ -1,0 +1,50 @@
+<html>
+<body>
+
+<a href="/">All</a>
+<a href="/?category=Furniture">Furniture</a>
+<a href="/?category=Jewelry">Jewelery</a>
+<a href="/?category=Shoes">Shoes</a>
+<a href="/?category=Food">Food</a>
+<a href="/?category=Alcohol">Alcohol</a>
+<a href="/?category=Toiletries">Toiletries</a>
+<br><br>
+
+
+<form action="/" method="get">
+    <!--<input type="text" placeholder="Search" name="database"/>-->
+    <!--<button type="submit">Search</button>-->
+</form>
+
+<table class="table table-hover table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Credit Card</th>
+        <th>CVV</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#purchases}}
+    <tr>
+        <td>{{customer.name}}</td>
+        <td>{{customer.email}}</td>
+        <td>{{category}}</td>
+        <td>{{date}}</td>
+        <td>{{credit_card}}</td>
+        <td>{{cvv}}</td>
+        <td>
+        </td>
+    </tr>
+    {{/purchases}}
+    </tbody>
+    </table>
+    {{#showNext}}
+        <a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+    {{/showNext}}
+</body>
+</html>
