@@ -1,5 +1,6 @@
-package com.novauc;
+package com.novauc.controllers;
 
+import com.novauc.entities.Purchase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -15,17 +16,23 @@ public class PurchasesController {
 //    @RequestMapping(path = "/", method = RequestMethod.GET)
 //    public String home(Model model, String category, Integer page) {
 //        page = (page == null) ? 0 : page;
-//        PageRequest pr = new PageRequest(page, 10);
+//        PageRequest p_r = new PageRequest(page, 10);
 //        Page<Purchase> p;
 //        if (category != null) {
-//            p = purchases.findByCategory(pr, category);
+//            p = purchases.findByCategory(p_r, category);
 //        }
 //        else {
-//            p = purchases.findAll(pr);
+//            p = purchases.findAll(p_r);
 //        }
 //        model.addAttribute("purchases", p);
 //        model.addAttribute("nextPage", page+1);
 //        model.addAttribute("showNext", p.hasNext());
+//
+//
+//        model.addAttribute("category", category);
+//
+//
 //        return "home";
 //    }
+
 }

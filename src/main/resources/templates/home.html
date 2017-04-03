@@ -26,16 +26,17 @@
 <table>
     <tr>
         <th>Name</th>
-        <th>Email</th>
+        <th>Email Address</th>
         <th>Category</th>
         <th>Credit Card #</th>
         <th>CVV</th>
-        <th>Date</th>
+        <th>Date and Time</th>
     </tr>
     {{#purchases}}
 
     <tr>
-        <!-- find a way to join purchase with custoer data and add to model for following to render -->
+        <!-- find a way to join purchase with customer data and add to model for following to render -->
+        <!-- it worked anyway without having to join purchase with customer data to model for it to render -->
                 <td>{{customer.name}}</td>
                 <td>{{customer.email}}</td>
 
@@ -49,6 +50,24 @@
 
 </table>
 <br><br>
+
+
+
+
+<!--this information was added for Paging and Sorting-->
+{{#showNext}}
+<a href="/?page={{nextPage}}">Next</a>
+{{/showNext}}
+
+
+
+
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}">Next</a>
+{{/showNext}}
+
+
+
 
 </body>
 </html>
