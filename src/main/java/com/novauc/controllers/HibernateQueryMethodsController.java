@@ -5,6 +5,8 @@ import com.novauc.entities.Purchase;
 import com.novauc.services.CustomerRepository;
 import com.novauc.services.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,18 +32,35 @@ public class HibernateQueryMethodsController {
     PurchaseRepository purchases;
 
 
+//    @RequestMapping(path = "/", method = RequestMethod.GET)
+//    public String home(Model model, String category) {
+//        List<Purchase> purchasesList = (ArrayList) purchases.findAll();
+//        if (category != null) {
+//            purchasesList = (List) purchases.findBycategory(category);
+//        } else {
+//            purchasesList = (List) purchases.findAll();
+//        }
+//        model.addAttribute("purchases", purchasesList);
+//        return "home";
+//    }
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, String category) {
-        List<Purchase> purchasesList = (ArrayList) purchases.findAll();
+    public String home(Model model, String category, Integer page) {
+        page = (page == null) ? 0 : page;
+        PageRequest pr = new PageRequest(page, 5);
+        Page<Purchase> p;
         if (category != null) {
-            purchasesList = (List) purchases.findBycategory(category);
-        } else {
-            purchasesList = (List) purchases.findAll();
+            p = purchases.findByCategoryOrderByDateDesc(pr, category);
         }
-        model.addAttribute("purchases", purchasesList);
+        else {
+            p = purchases.findAllByOrderByDateDesc(pr);
+        }
+        model.addAttribute("purchases", p);
+        model.addAttribute("nextPage", page+1);
+        model.addAttribute("showNext", p.hasNext());
+        model.addAttribute("category", category);
         return "home";
     }
-
 
     @PostConstruct
     public void init() throws IOException {
