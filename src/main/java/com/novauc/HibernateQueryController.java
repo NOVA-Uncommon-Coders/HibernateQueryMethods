@@ -1,6 +1,9 @@
 package com.novauc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +27,29 @@ CustomerRepository customer;
 @Autowired
 PurchaseRepository purchase;
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(String category, Model model) {
-        List<Purchases>results = null;
-        if(category != null){
-            results = (List)purchase.findByCategory(category);
-        }else {
-            results = (List)purchase.findAll();
+    @Controller
+    public class PurchasesController {
+
+        @RequestMapping(path = "/", method = RequestMethod.GET)
+        public String home(Model model, String category, Integer page) {
+            page = (page == null) ? 0 : page;
+            PageRequest pr = new PageRequest(page, 10);
+            Page<Purchases> p;
+            if (category != null) {
+                p = purchase.findByCategoryOrderByDateDesc(pr, category);
+            }
+            else {
+                p = purchase.findAll(pr);
+            }
+            model.addAttribute("p", p);
+            model.addAttribute("nextPage", page+1);
+            model.addAttribute("showNext", p.hasNext());
+            model.addAttribute("category", category);
+            return "Home";
         }
-        model.addAttribute("purchase", results);
-        return "Home";
     }
+
+
 @PostConstruct
     public void init()throws IOException{
         File customers= new File("customers.csv");
